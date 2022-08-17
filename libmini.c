@@ -193,15 +193,18 @@ int sigprocmask(int how, const sigset_t *set, sigset_t *oldset) {
 	WRAPPER_RETval(int);
 }
 
-int sigemptyset(sigset_t *set) {
-	bzero(set, sizeof(sigset_t));
-	return 0;
+int sigaddset (sigset_t *set, int sig) {
+    sig -= 1;
+    *set |= (1 << sig);
+    return 0;
 }
 
-int sigaddset (sigset_t *set, int sig) {
-	long ret = write(sig) to set + 1
-	WRAPPER_RETval(int)
+int sigdelset (sigset_t *set, int sig) {
+    sig -= 1;
+    *set &= ~(1 << sig);
+    return 0;
 }
+    
 
 #define	PERRMSG_MIN	0
 #define	PERRMSG_MAX	34

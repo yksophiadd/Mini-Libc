@@ -103,3 +103,48 @@ sleep_failed:
 sleep_quit:
 	add	rsp, 32
 	ret
+
+    global sigemptyset:function
+sigemptyset:
+    mov rax, [rdi]
+    mov rbx, 0
+    and rax, rbx
+    cmp rax, 0
+    jne sigemptyset_err ; if error
+    ret
+sigemptyset_err:
+    mov rax, -1
+    ret
+
+    global sigfillset:function
+sigfillset:
+    mov rax, [rdi]
+    mov rbx, -1
+    or rax, rbx
+    cmp rax, -1
+    je sigfillset_quit
+sigfillset_err:
+    mov rax, -1
+    ret
+sigfillset_quit:
+    mov rax, 0
+    ret
+
+    global sigismember:function
+sigismember: ;rdi rsi
+    mov rbx, [rdi]
+    mov rcx, rsi
+    shr rbx, cl
+    and rbx, 1
+    cmp rbx, 1
+    je ismember
+    cmp rbx, 0
+    je isnotmember
+    mov rax, -1
+    ret
+isnotmember:
+    mov rax, 0
+    ret
+ismember:
+    mov rax, 1
+    ret
