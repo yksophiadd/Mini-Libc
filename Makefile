@@ -5,7 +5,8 @@ ASM64 = yasm -f elf64 -DYASM -D__x86_64__ -DPIC
 CFLAGS = -g -Wall -fno-stack-protector
 LD = ld -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2
 
-PROGS   = libmini.so libmini64.a write1 alarm1 alarm2
+PROGS   = libmini.so libmini64.a start.o \
+		  write1 alarm1 alarm2
 
 all: $(PROGS)
 

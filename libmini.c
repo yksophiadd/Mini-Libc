@@ -184,12 +184,12 @@ size_t strlen(const char *s) {
 }
 
 int sigpending(sigset_t *set) {
-	long ret = sys_sigpending(set);
+	long ret = sys_rt_sigpending(set, sizeof(sigset_t));
 	WRAPPER_RETval(int);
 }
 
 int sigprocmask(int how, const sigset_t *set, sigset_t *oldset) {
-	long ret = sys_sigprocmask(how, set, oldset);
+	long ret = sys_rt_sigprocmask(how, set, oldset, sizeof(sigset_t));
 	WRAPPER_RETval(int);
 }
 

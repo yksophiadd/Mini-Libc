@@ -218,8 +218,8 @@ long sys_setuid(uid_t uid);
 long sys_setgid(gid_t gid);
 long sys_geteuid();
 long sys_getegid();
-long sys_sigpending(sigset_t *set);
-long sys_sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
+long sys_rt_sigpending(sigset_t *set, size_t sigsetsize);
+long sys_rt_sigprocmask(int how, const sigset_t *set, sigset_t *oldset, size_t sigsetsize);
 
 /* wrappers */
 ssize_t	read(int fd, char *buf, size_t count);

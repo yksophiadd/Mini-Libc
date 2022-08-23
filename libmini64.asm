@@ -25,7 +25,7 @@ extern	errno
 	gensys   9, mmap
 	gensys  10, mprotect
 	gensys  11, munmap
-	gensys  14, sigprocmask
+	gensys  14, rt_sigprocmask
 	gensys  22, pipe
 	gensys  32, dup
 	gensys  33, dup2
@@ -53,7 +53,7 @@ extern	errno
 	gensys 106, setgid
 	gensys 107, geteuid
 	gensys 108, getegid
-	gensys 127, sigpending
+	gensys 127, rt_sigpending
 
 	global open:function
 open:
@@ -132,13 +132,14 @@ sigfillset_quit:
 
     global sigismember:function
 sigismember: ;rdi rsi
-    mov rbx, [rdi]
+    mov r8, [rdi]
     mov rcx, rsi
-    shr rbx, cl
-    and rbx, 1
-    cmp rbx, 1
+    sub rcx, 1
+    shr r8, cl
+    and r8, 1
+    cmp r8, 1
     je ismember
-    cmp rbx, 0
+    cmp r8, 0
     je isnotmember
     mov rax, -1
     ret
