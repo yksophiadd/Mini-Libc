@@ -6,7 +6,8 @@ CFLAGS = -g -Wall -fno-stack-protector
 LD = ld -m elf_x86_64 --dynamic-linker /lib64/ld-linux-x86-64.so.2
 
 PROGS   = libmini.so libmini64.a start.o \
-		  write1 alarm1 alarm2
+		  write1 alarm1 alarm2 alarm3 \
+		  jmp1
 
 all: $(PROGS)
 
@@ -42,6 +43,16 @@ alarm2: alarm2.o start.o
 	$(CC) -c $(CFLAGS) -nostdlib -I. -I.. -DUSEMINI alarm2.c
 	$(LD) -o $@ $^ -L. -L.. -lmini
 	rm alarm2.o
+
+alarm3: alarm3.o start.o
+	$(CC) -c $(CFLAGS) -nostdlib -I. -I.. -DUSEMINI alarm3.c
+	$(LD) -o $@ $^ -L. -L.. -lmini
+	rm alarm3.o
+
+jmp1: jmp1.o start.o
+	$(CC) -c $(CFLAGS) -nostdlib -I. -I.. -DUSEMINI jmp1.c
+	$(LD) -o $@ $^ -L. -L.. -lmini
+	rm jmp1.o
 
 clean:
 	rm -f a.out *.o $(PROGS) 

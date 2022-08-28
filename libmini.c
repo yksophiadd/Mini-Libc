@@ -204,7 +204,7 @@ int sigdelset (sigset_t *set, int sig) {
     *set &= ~(1 << sig);
     return 0;
 }
-    
+
 
 #define	PERRMSG_MIN	0
 #define	PERRMSG_MAX	34

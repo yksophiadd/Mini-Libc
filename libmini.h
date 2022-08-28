@@ -178,7 +178,7 @@ struct sigaction {
 	void (*sa_restorer)(void);
 };
 
-struct jmp_buf_s {
+typedef struct jmp_buf_s {
 	long long reg[8];
 	sigset_t mask;
 } jmp_buf[1];
@@ -262,6 +262,8 @@ size_t strlen(const char *s);
 void perror(const char *prefix);
 unsigned int sleep(unsigned int s);
 
+int setjmp(jmp_buf env);
+void longjmp(jmp_buf env, int val);
 int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);
 int sigismember(const sigset_t *set, int sig);
 int sigaddset (sigset_t *set, int sig);

@@ -131,7 +131,7 @@ sigfillset_quit:
     ret
 
     global sigismember:function
-sigismember: ;rdi rsi
+sigismember:
     mov r8, [rdi]
     mov rcx, rsi
     sub rcx, 1
@@ -149,3 +149,30 @@ isnotmember:
 ismember:
     mov rax, 1
     ret
+
+    global setjmp:function
+setjmp: ;rdi, jmp_buf / rbx, rsp, rbp, r12, 13, 14, 15, return addr.(rsi)
+    pop rsi
+    mov [rdi], rbx
+    mov [rdi+8], rsp
+    mov [rdi+16], rbp
+    mov [rdi+24], r12
+    mov [rdi+32], r13
+    mov [rdi+40], r14
+    mov [rdi+48], r15
+    mov [rdi+56], rsi
+    xor eax, eax
+    push rsi
+    ret
+
+    global longjmp:function
+longjmp:  ;rdi, rsi
+    mov rax, rsi
+    mov rbx, [rdi]
+    mov rsp, [rdi+8]
+    mov rbp, [rdi+16]
+    mov r12, [rdi+24]
+    mov r13, [rdi+32]
+    mov r14, [rdi+40]
+    mov r15, [rdi+48]
+    jmp [rdi+56]
